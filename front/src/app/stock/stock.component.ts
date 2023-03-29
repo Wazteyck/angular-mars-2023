@@ -1,7 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
-import { faRotateRight, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { Article } from '../interfaces/article';
+import { faPlus, faRotateRight } from '@fortawesome/free-solid-svg-icons';
 import { ArticleService } from '../services/article.service';
 
 @Component({
