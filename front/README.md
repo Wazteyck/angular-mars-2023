@@ -27,6 +27,10 @@
 - npm i normalize.css
 - npm i sanitize.css
 
+### Icons
+
+- ng add @fortawesome/angular-fontawesome@0.12.x
+
 ## DOC FROM NG
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.4.

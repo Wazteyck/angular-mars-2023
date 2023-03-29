@@ -3,9 +3,15 @@
 
   <div class="content">
     <nav>
-      <button>Rafraichir</button>
-      <a routerLink="add" class="button">Ajouter</a>
-      <button>Supprimer</button>
+      <button title="Rafraichir">
+        <fa-icon [icon]="refreshIcon"></fa-icon>
+      </button>
+      <a routerLink="add" class="button" title="Ajouter">
+        <fa-icon [icon]="faPlus"></fa-icon>
+      </a>
+      <button title="Supprimer">
+        <fa-icon [icon]="trashIcon"></fa-icon>
+      </button>
     </nav>
 
     <table>
