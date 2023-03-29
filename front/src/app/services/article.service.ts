@@ -34,4 +34,14 @@ export class ArticleService {
       this.articles$.next(this.articles$.value);
     }, 2000);
   }
+
+  add(
+    newArticle: Partial<{
+      name: string | null;
+      price: number | null;
+      qty: number | null;
+    }>
+  ): any {
+    throw new Error('Method not implemented.');
+  }
 }
