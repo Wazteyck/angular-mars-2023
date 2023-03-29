@@ -19,6 +19,11 @@
 * ng g c layout/header --dry-run
 * ng g c layout/header --export
 
+### CSS
+
+- npm i normalize.css
+- npm i sanitize.css
+
 ## DOC FROM NG
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.4.
