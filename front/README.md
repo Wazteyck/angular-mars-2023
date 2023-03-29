@@ -22,6 +22,8 @@
 - ng g m stock --route stock -m app
 - ng g c stock/add
 
+- ng g s services/article
+
 ### CSS
 
 - npm i normalize.css
