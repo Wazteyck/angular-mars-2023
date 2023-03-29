@@ -9,8 +9,8 @@ button {
   color: inherit;
   text-decoration: inherit;
 
-  border: 0.2em solid #ddd;
-  background-color: #ddd;
+  border: 0.2em solid #eee;
+  background-color: #eee;
   border-radius: 0.2em;
 
   &:disabled {
@@ -21,13 +21,13 @@ button {
     cursor: pointer;
 
     &:hover {
-      background-color: #ccc;
-      color: #ccc;
+      background-color: #333;
+      color: #ddd;
     }
 
     &:active {
-      background-color: #bbb;
-      color: #bbb;
+      background-color: #222;
+      color: #ccc;
     }
   }
 
