@@ -16,8 +16,11 @@
 - ng g m layout --dry-run (dry run - essai sans conséquence)
 - ng g m layout -m app
 
-* ng g c layout/header --dry-run
-* ng g c layout/header --export
+- ng g c layout/header --dry-run
+- ng g c layout/header --export
+
+- ng g m stock --route stock -m app
+- ng g c stock/add
 
 ### CSS
 
