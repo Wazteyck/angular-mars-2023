@@ -10,6 +10,12 @@
 - Pipe (@Pipe)
 - Service (@Injectable)
 
+### Generate NG
+
+- ng --help
+- ng g m layout --dry-run (dry run - essai sans conséquence)
+- ng g m layout -m app
+
 ## DOC FROM NG
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.4.
