@@ -3,15 +3,31 @@
 
   <div class="content">
     <nav>
-      <button title="Rafraichir">
-        <fa-icon [icon]="refreshIcon"></fa-icon>
-      </button>
+      <app-async-icon-button
+        [observable]="refresh.bind(this)"
+        label="Rafraichir"
+        [icon]="refreshIcon"
+      ></app-async-icon-button>
+
       <a routerLink="add" class="button" title="Ajouter">
         <fa-icon [icon]="faPlus"></fa-icon>
       </a>
-      <button title="Supprimer">
+
+      <app-async-icon-button
+        [hidden]="selectedArticles.size === 0"
+        [observable]="remove.bind(this)"
+        label="Supprimer"
+        [icon]="trashIcon"
+      ></app-async-icon-button>
+
+      <!-- <button
+        title="Supprimer"
+        *ngIf="selectedArticles.size > 0"
+        (click)="remove()"
+      >
+        or [hidden]="selectedArticles.size === 0"
         <fa-icon [icon]="trashIcon"></fa-icon>
-      </button>
+      </button> -->
     </nav>
 
     <table>
@@ -24,7 +40,11 @@
       </thead>
 
       <tbody>
-        <tr *ngFor="let a of articleService.articles$ | async">
+        <tr
+          *ngFor="let a of articleService.articles$ | async"
+          (click)="select(a)"
+          [class.selected]="selectedArticles.has(a)"
+        >
           <td class="name">{{ a.name }}</td>
           <td class="price">{{ a.price }} €</td>
           <td class="quantity">{{ a.qty }}</td>

@@ -1,0 +1,4 @@
+<button [title]="label" (click)="doSomething()" [disabled]="isRunning">
+  <!-- or [hidden]="selectedArticles.size === 0" -->
+  <fa-icon [icon]="isRunning ? circleNotch : icon" [spin]="isRunning"></fa-icon>
+</button>

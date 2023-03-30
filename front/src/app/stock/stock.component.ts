@@ -1,6 +1,8 @@
 import { Component, OnDestroy } from '@angular/core';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { faPlus, faRotateRight } from '@fortawesome/free-solid-svg-icons';
+import { delay, of, switchMap, tap } from 'rxjs';
+import { Article } from '../interfaces/article';
 import { ArticleService } from '../services/article.service';
 
 @Component({
@@ -11,6 +13,7 @@ import { ArticleService } from '../services/article.service';
 export class StockComponent implements OnDestroy {
   faPlus = faPlus;
   refreshIcon = faRotateRight;
+  selectedArticles = new Set<Article>();
   trashIcon = faTrashAlt;
 
   constructor(readonly articleService: ArticleService) {
@@ -20,5 +23,41 @@ export class StockComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     console.log('Stock component disappear');
+  }
+
+  refresh() {
+    console.log('refreshing');
+    return of(undefined).pipe(
+      delay(2000),
+      switchMap(() => {
+        return this.articleService.refresh();
+      })
+    );
+  }
+
+  remove() {
+    console.log('about to remove');
+    return of(undefined).pipe(
+      delay(2000),
+      switchMap(() => {
+        const ids = [...this.selectedArticles].map((a) => a.id);
+        return this.articleService.remove(ids);
+      }),
+      switchMap(() => {
+        return this.articleService.refresh();
+      }),
+      tap(() => {
+        this.selectedArticles.clear();
+      })
+    );
+  }
+
+  select(a: Article) {
+    console.log('a: ', a);
+    if (this.selectedArticles.has(a)) {
+      this.selectedArticles.delete(a);
+    } else {
+      this.selectedArticles.add(a);
+    }
   }
 }
