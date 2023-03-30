@@ -45,7 +45,7 @@ export class ArticleService {
     return of(undefined);
   }
 
-  refresh(): any {
-    throw new Error('Method not implemented.');
+  refresh(): Observable<void> {
+    return of(void 0);
   }
 }
