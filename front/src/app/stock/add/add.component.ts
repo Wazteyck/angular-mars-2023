@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { delay, of, switchMap } from 'rxjs';
+import { NewArticle } from 'src/app/interfaces/article';
 import { ArticleService } from 'src/app/services/article.service';
 
 @Component({
@@ -29,8 +30,12 @@ export class AddComponent {
       .pipe(
         delay(1000),
         switchMap(() => {
-          const newArticle = this.f.value;
+          const newArticle = this.f.value as NewArticle;
           return this.articleService.add(newArticle);
+        }),
+        switchMap(() => this.articleService.refresh()),
+        switchMap(() => {
+          this.router.goto('..');
         })
       )
       .subscribe();

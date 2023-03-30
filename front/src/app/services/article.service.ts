@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { Article } from '../interfaces/article';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { Article, NewArticle } from '../interfaces/article';
+
+const generateId = () => {
+  return Date.now() + '_' + Math.round(Math.random() * 1e12);
+};
 
 const articles: Article[] = [
   {
@@ -35,13 +39,13 @@ export class ArticleService {
     }, 2000);
   }
 
-  add(
-    newArticle: Partial<{
-      name: string | null;
-      price: number | null;
-      qty: number | null;
-    }>
-  ): any {
+  add(newArticle: NewArticle): Observable<void> {
+    const article = { ...newArticle, id: generateId() };
+    articles.push(article);
+    return of(undefined);
+  }
+
+  refresh(): any {
     throw new Error('Method not implemented.');
   }
 }
