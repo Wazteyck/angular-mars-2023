@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of, switchMap, throwError } from 'rxjs';
-import { Article } from '../interfaces/article';
+import { Article, NewArticle } from '../interfaces/article';
 import { ArticleService } from './article.service';
 
 const url = 'http://localhost:3000/api/articles';
@@ -22,7 +22,32 @@ export class HttpArticleService extends ArticleService {
         this.articles$.next(articles);
       }),
       catchError((err) => {
-        return throwError(() => new Error('Problème de râfraichissement.'));
+        return throwError(() => new Error('Erreur de râfraichissement'));
+      })
+    );
+  }
+
+  override add(newArticle: NewArticle): Observable<void> {
+    return of(undefined).pipe(
+      switchMap(() => this.http.post<void>(url, newArticle)),
+      catchError((err) => {
+        return throwError(() => new Error("Erreur de l'ajout"));
+      })
+    );
+  }
+
+  override remove(ids: string[]): Observable<void> {
+    return of(undefined).pipe(
+      switchMap(() =>
+        this.http.delete<void>(url, {
+          body: ids,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+      ),
+      catchError((err) => {
+        return throwError(() => new Error('Erreur de la suppression.'));
       })
     );
   }

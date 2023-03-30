@@ -1,6 +1,10 @@
 import { Component, OnDestroy } from '@angular/core';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
-import { faPlus, faRotateRight } from '@fortawesome/free-solid-svg-icons';
+import {
+  faPlus,
+  faRotateRight,
+  faCircleNotch,
+} from '@fortawesome/free-solid-svg-icons';
 import { delay, Observable, of, switchMap, tap } from 'rxjs';
 import { Article } from '../interfaces/article';
 import { ArticleService } from '../services/article.service';
@@ -12,7 +16,9 @@ import { ArticleService } from '../services/article.service';
 })
 export class StockComponent implements OnDestroy {
   errorMsg = '';
+  faCircleNotch = faCircleNotch;
   faPlus = faPlus;
+  isLoading = false;
   refreshIcon = faRotateRight;
   selectedArticles = new Set<Article>();
   trashIcon = faTrashAlt;
@@ -20,6 +26,23 @@ export class StockComponent implements OnDestroy {
   constructor(readonly articleService: ArticleService) {
     console.log('articleService: ', articleService);
     console.log('Stock component birth');
+    this.articleService.articles$
+      .pipe(
+        tap((articles) => {
+          this.isLoading = articles === undefined;
+        }),
+        switchMap(() => {
+          if (this.isLoading) {
+            return of(undefined).pipe(
+              delay(2000),
+              switchMap(() => this.articleService.refresh())
+            );
+          } else {
+            return of(undefined);
+          }
+        })
+      )
+      .subscribe();
   }
 
   ngOnDestroy(): void {
@@ -41,6 +64,10 @@ export class StockComponent implements OnDestroy {
       }),
       this.refreshAndClear.bind(this)
     );
+  }
+
+  resetErrorMsg() {
+    this.errorMsg = '';
   }
 
   select(a: Article) {

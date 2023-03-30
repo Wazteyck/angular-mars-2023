@@ -7,6 +7,7 @@
         [observable]="refresh.bind(this)"
         label="Rafraichir"
         [icon]="refreshIcon"
+        (start)="resetErrorMsg()"
         (error)="setErrorMsg($event)"
       ></app-async-icon-button>
 
@@ -19,6 +20,8 @@
         [observable]="remove.bind(this)"
         label="Supprimer"
         [icon]="trashIcon"
+        (start)="resetErrorMsg()"
+        (error)="setErrorMsg($event)"
       ></app-async-icon-button>
 
       <!-- <button
@@ -43,15 +46,25 @@
       </thead>
 
       <tbody>
-        <tr
-          *ngFor="let a of articleService.articles$ | async"
-          (click)="select(a)"
-          [class.selected]="selectedArticles.has(a)"
-        >
-          <td class="name">{{ a.name }}</td>
-          <td class="price">{{ a.price }} €</td>
-          <td class="quantity">{{ a.qty }}</td>
+        <tr *ngIf="isLoading; else data">
+          <td colspan="3">
+            <div class="loading">
+              <fa-icon [icon]="faCircleNotch" [spin]="true"></fa-icon>
+              <span>Chargement</span>
+            </div>
+          </td>
         </tr>
+        <ng-template #data>
+          <tr
+            *ngFor="let a of articleService.articles$ | async"
+            (click)="select(a)"
+            [class.selected]="selectedArticles.has(a)"
+          >
+            <td class="name">{{ a.name }}</td>
+            <td class="price">{{ a.price }} €</td>
+            <td class="quantity">{{ a.qty }}</td>
+          </tr></ng-template
+        >
       </tbody>
     </table>
   </div>

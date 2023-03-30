@@ -25,16 +25,10 @@ let articles: Article[] = [
   providedIn: 'root',
 })
 export class ArticleService {
-  articles$ = new BehaviorSubject<Article[]>(articles);
+  articles$ = new BehaviorSubject<undefined | Article[]>(undefined);
 
   constructor() {
     setTimeout(() => {
-      this.articles$.value.push({
-        id: '5a',
-        name: 'Marteau',
-        price: 10,
-        qty: 5,
-      });
       this.articles$.next(this.articles$.value);
     }, 2000);
   }

@@ -7,4 +7,18 @@ div.content {
     display: flex;
     gap: 0.5em;
   }
+
+  div.error {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    color: #0000ff;
+  }
+}
+
+div.loading {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 1em;
 }
