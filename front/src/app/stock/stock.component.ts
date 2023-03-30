@@ -11,6 +11,7 @@ import { ArticleService } from '../services/article.service';
   styleUrls: ['./stock.component.scss'],
 })
 export class StockComponent implements OnDestroy {
+  errorMsg = '';
   faPlus = faPlus;
   refreshIcon = faRotateRight;
   selectedArticles = new Set<Article>();
@@ -32,7 +33,27 @@ export class StockComponent implements OnDestroy {
 
   remove() {
     console.log('about to remove');
-    return of(undefined).pipe(delay(2000), this.refreshAndClear.bind(this));
+    return of(undefined).pipe(
+      delay(2000),
+      switchMap(() => {
+        const ids = [...this.selectedArticles].map((x) => x.id);
+        return this.articleService.remove(ids);
+      }),
+      this.refreshAndClear.bind(this)
+    );
+  }
+
+  select(a: Article) {
+    console.log('a: ', a);
+    if (this.selectedArticles.has(a)) {
+      this.selectedArticles.delete(a);
+    } else {
+      this.selectedArticles.add(a);
+    }
+  }
+
+  setErrorMsg(err: Error) {
+    this.errorMsg = err.message;
   }
 
   private refreshAndClear(obs: Observable<void>): Observable<void> {
@@ -44,13 +65,5 @@ export class StockComponent implements OnDestroy {
         this.selectedArticles.clear();
       })
     );
-  }
-  select(a: Article) {
-    console.log('a: ', a);
-    if (this.selectedArticles.has(a)) {
-      this.selectedArticles.delete(a);
-    } else {
-      this.selectedArticles.add(a);
-    }
   }
 }

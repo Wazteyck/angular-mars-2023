@@ -1,6 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { faCircleNotch, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-import { Observable, of, switchMap, tap } from 'rxjs';
+import { catchError, finalize, Observable, of, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-async-icon-button',
@@ -17,6 +17,9 @@ export class AsyncIconButtonComponent {
   @Input()
   observable: () => Observable<void> = () => of(undefined);
 
+  @Output()
+  error = new EventEmitter<Error>();
+
   doSomething() {
     of(undefined)
       .pipe(
@@ -24,7 +27,12 @@ export class AsyncIconButtonComponent {
           this.isRunning = true;
         }),
         switchMap(this.observable),
-        tap(() => {
+        catchError((err) => {
+          console.log('err: ', err);
+          this.error.emit(err instanceof Error ? err : new Error(err));
+          return of(undefined);
+        }),
+        finalize(() => {
           this.isRunning = false;
         })
       )
