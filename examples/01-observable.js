@@ -14,7 +14,7 @@ const obs = new Observable((subscriber) => {
   subscriber.complete();
 });
 
-const obsError = throwError(new Error("Error happend"));
+const obsError = throwError(new Error("Error happend!"));
 
 const obs2 = new Observable((subscriber) => {
   subscriber.next(0);
