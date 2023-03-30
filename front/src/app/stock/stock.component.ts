@@ -1,7 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { faPlus, faRotateRight } from '@fortawesome/free-solid-svg-icons';
-import { delay, of, switchMap, tap } from 'rxjs';
+import { delay, Observable, of, switchMap, tap } from 'rxjs';
 import { Article } from '../interfaces/article';
 import { ArticleService } from '../services/article.service';
 
@@ -27,22 +27,16 @@ export class StockComponent implements OnDestroy {
 
   refresh() {
     console.log('refreshing');
-    return of(undefined).pipe(
-      delay(2000),
-      switchMap(() => {
-        return this.articleService.refresh();
-      })
-    );
+    return of(undefined).pipe(delay(2000), this.refreshAndClear.bind(this));
   }
 
   remove() {
     console.log('about to remove');
-    return of(undefined).pipe(
-      delay(2000),
-      switchMap(() => {
-        const ids = [...this.selectedArticles].map((a) => a.id);
-        return this.articleService.remove(ids);
-      }),
+    return of(undefined).pipe(delay(2000), this.refreshAndClear.bind(this));
+  }
+
+  private refreshAndClear(obs: Observable<void>): Observable<void> {
+    return obs.pipe(
       switchMap(() => {
         return this.articleService.refresh();
       }),
@@ -51,7 +45,6 @@ export class StockComponent implements OnDestroy {
       })
     );
   }
-
   select(a: Article) {
     console.log('a: ', a);
     if (this.selectedArticles.has(a)) {
