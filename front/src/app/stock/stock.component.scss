@@ -22,3 +22,10 @@ div.loading {
   justify-content: center;
   gap: 1em;
 }
+
+tbody {
+  .quantity,
+  .price {
+    text-align: right;
+  }
+}

@@ -1,6 +1,6 @@
 console.log("The server is running...")
 
-import express, { Request, Response, NextFunction, json } from "express"
+import express, { Request, Response, NextFunction } from "express"
 import serveIndex from "serve-index"
 import api from "./api"
 
