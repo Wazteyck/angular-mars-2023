@@ -6,7 +6,7 @@ const generateId = () => {
   return Date.now() + '_' + Math.round(Math.random() * 1e12);
 };
 
-let articles: Article[] = [
+export let articles: Article[] = [
   {
     id: 'a1',
     name: 'Tournevis',
