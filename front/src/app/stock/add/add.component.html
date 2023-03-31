@@ -7,7 +7,7 @@
     </label>
     <label>
       <span> Prix </span>
-      <input type="number" formControlName="price" />
+      <input type="number" formControlName="price" pattern="[0-9]*" />
     </label>
     <label>
       <span> Quantité </span>
@@ -16,7 +16,11 @@
     <div class="error">
       {{ errorMsg }}
     </div>
-    <button type="submit" class="primary" [disabled]="isSubmitting">
+    <button
+      type="submit"
+      class="primary"
+      [disabled]="isSubmitting || f.invalid"
+    >
       <fa-icon
         [icon]="isSubmitting ? faFan : faPlus"
         [spin]="isSubmitting"
