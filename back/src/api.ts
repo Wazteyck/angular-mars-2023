@@ -49,13 +49,13 @@ app.post("/articles", (req, res) => {
   const newArticle: NewArticle = req.body
   const article = { ...newArticle, id: generateId() }
   articles.push(article)
-  res.status(201).end
+  res.status(201).end()
 })
 
 app.delete("/articles", (req, res) => {
   const ids: string[] = req.body
   articles = articles.filter((x) => !ids.includes(x.id))
-  res.status(204).end
+  res.status(204).end()
 })
 
 export default app
