@@ -33,6 +33,11 @@
 
 - ng add @fortawesome/angular-fontawesome@0.12.x
 
+### Test
+
+- ng g eslint
+- ng generate config karma + ng test
+
 ## DOC FROM NG
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.4.

@@ -1,10 +1,5 @@
 import { NgModule } from '@angular/core';
-import {
-  PreloadAllModules,
-  PreloadingStrategy,
-  RouterModule,
-  Routes,
-} from '@angular/router';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './routes/home/home.component';
 import { LegalComponent } from './routes/legal/legal.component';
 
